@@ -19,6 +19,9 @@ namespace VK
 
     public partial class MainWindow : Window
     {
+        public  string userLogin { get; } = "Forelock";
+        public  string userPass { get; } = "1234";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -107,9 +110,9 @@ namespace VK
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
+            swblocknot();
 
-
-            if ((Login.Text == "1234" ) && (Pass.Text == "1234" ))
+            if ((Login.Text == userLogin  ) && (Pass.Text ==  userPass ))
             {
                 var login = Convert.ToString(Login.Text);
 
@@ -126,7 +129,7 @@ namespace VK
                 reload.Visibility = Visibility.Visible;
                 Captcha.Visibility = Visibility.Visible;
 
-                if ((Login.Text == "1234") && (Pass.Text == "1234") && (Captcha1.Text == Captcha.Text))
+                if ((Login.Text == userLogin) && (Pass.Text == userPass) && (Captcha1.Text == Captcha.Text))
                 {
                     var login = Convert.ToString(Login.Text);
 
