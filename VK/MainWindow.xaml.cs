@@ -28,34 +28,38 @@ namespace VK
             Captcha.Visibility = Visibility.Hidden;
 
             CaptchaMet();
+
+            string path = @"C:\Users\Forelock\Desktop\vk.txt"; 
+
+            using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
+            {
+                string login = sr.ReadLine();
+                string pass = sr.ReadLine();
+
+                if (pass != null && login != null )
+                {
+                    Login.Text = login;
+                    Pass.Text = pass;
+                }
+            }
         }
 
-        public void swBlocknot()
+
+        public void swblocknot()
         {
-            string path = @"C:\Users\user\Desktop\vk.txt";
+            string path = @"C:\users\forelock\desktop\vk.txt";
 
             using (StreamWriter sw = new StreamWriter(path, true))
             {
                 if (Save.IsChecked == true)
                 {
-                    sw.WriteLine();
                     sw.WriteLine(Login.Text);
                     sw.WriteLine(Pass.Text);
-                    return;
+                    sw.Close();
                 }
             }
         }
 
-        public void srBlocknot()
-        {
-            string path = @"C:\Users\user\Desktop\vk.txt";
-
-            using (StreamReader sr = new StreamReader(path))
-            {
-                string result = sr.ReadToEnd();
-                return;
-            }
-        }
 
         public  void CaptchaMet()
         {
@@ -103,36 +107,35 @@ namespace VK
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            swBlocknot();
-            srBlocknot();
 
-            //if ((Login.ToString == ) && (Pass.ToString == ))
-            //{
+
+            if ((Login.Text == "1234" ) && (Pass.Text == "1234" ))
+            {
                 var login = Convert.ToString(Login.Text);
 
                 this.Hide();
                 NEXT next = new NEXT(login.ToString());
                 next.ShowDialog();
                 this.Show();
-            //    }
-            //    else
-            //    {
-            //        InitializeComponent();
-            //        Captcha1.Visibility = Visibility.Visible;
-            //        imgCaptcha.Visibility = Visibility.Visible;
-            //        reload.Visibility = Visibility.Visible;
-            //        Captcha.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                InitializeComponent();
+                Captcha1.Visibility = Visibility.Visible;
+                imgCaptcha.Visibility = Visibility.Visible;
+                reload.Visibility = Visibility.Visible;
+                Captcha.Visibility = Visibility.Visible;
 
-            //        if ((Login.ToString == ) && (Pass.ToString == ) && (Captcha1.Text == Captcha.Text))
-            //        {
-            //            var login = Convert.ToString(Login.Text);
+                if ((Login.Text == "1234") && (Pass.Text == "1234") && (Captcha1.Text == Captcha.Text))
+                {
+                    var login = Convert.ToString(Login.Text);
 
-            //            this.Hide();
-            //            NEXT next = new NEXT(login.ToString());
-            //            next.ShowDialog();
-            //            this.Show();
-            //        }
-            //    }
+                    this.Hide();
+                    NEXT next = new NEXT(login.ToString());
+                    next.ShowDialog();
+                    this.Show();
+                }
+            }
 
         }
 

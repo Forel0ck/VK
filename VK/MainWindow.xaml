@@ -138,7 +138,7 @@
             Width="200"
             Margin="10 10 150 10"
             FontSize="30"
-            Opacity="0.3"
+            Opacity="0.5"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
             />
