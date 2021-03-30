@@ -19,12 +19,25 @@ namespace VK
 
     public partial class MainWindow : Window
     {
-        public  string userLogin { get; } = "Forelock";
-        public  string userPass { get; } = "1234";
+        List<Person> peopleList = new List<Person>();
+        string path = @"C:\Users\user\Desktop\vk.txt";
 
         public MainWindow()
         {
             InitializeComponent();
+
+            using (StreamReader sr = new StreamReader(path))
+            {
+               string srRead  = sr.ReadToEnd();
+                if(srRead != "")
+                {
+                    Login.Text = srRead.Split()[0];
+                    Pass.Text = srRead.Split()[1];
+                }
+              
+
+            }
+
             Captcha1.Visibility = Visibility.Hidden;
             imgCaptcha.Visibility = Visibility.Hidden;
             reload.Visibility = Visibility.Hidden;
@@ -32,32 +45,26 @@ namespace VK
 
             CaptchaMet();
 
-            string path = @"C:\Users\Forelock\Desktop\vk.txt"; 
+            peopleList.Add(new Person { Login = "Forelock",Pass = "1234",Id = "1",Name = "Сергей Панченко"});
+            peopleList.Add(new Person { Login = "Den",Pass = "1111",Id = "2",Name = "Денис Большачков"});
+            peopleList.Add(new Person { Login = "Gyss",Pass = "2222",Id = "3",Name = "Никита Козлов"});
+            peopleList.Add(new Person { Login = "Riba",Pass = "3333",Id = "4",Name = "Сергей Панченко"});
+            peopleList.Add(new Person { Login = "Cheburek",Pass = "4444",Id = "5",Name = "Никита Симонов"});
 
-            using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
-            {
-                string login = sr.ReadLine();
-                string pass = sr.ReadLine();
-
-                if (pass != null && login != null )
-                {
-                    Login.Text = login;
-                    Pass.Text = pass;
-                }
-            }
         }
 
 
         public void swblocknot()
         {
-            string path = @"C:\users\forelock\desktop\vk.txt";
+          
 
-            using (StreamWriter sw = new StreamWriter(path, true))
+            using (StreamWriter sw = new StreamWriter(path, false))
             {
                 if (Save.IsChecked == true)
                 {
-                    sw.WriteLine(Login.Text);
-                    sw.WriteLine(Pass.Text);
+                    sw.Write(Login.Text);
+                    sw.Write(" ");
+                    sw.Write(Pass.Text);
                     sw.Close();
                 }
             }
@@ -112,7 +119,9 @@ namespace VK
         {
             swblocknot();
 
-            if ((Login.Text == userLogin  ) && (Pass.Text ==  userPass ))
+            Person user = peopleList.Where(p => p.Login == this.Login.Text && p.Pass == this.Pass.Text).FirstOrDefault(); 
+
+            if ( user!=null )
             {
                 var login = Convert.ToString(Login.Text);
 
@@ -129,7 +138,7 @@ namespace VK
                 reload.Visibility = Visibility.Visible;
                 Captcha.Visibility = Visibility.Visible;
 
-                if ((Login.Text == userLogin) && (Pass.Text == userPass) && (Captcha1.Text == Captcha.Text))
+                if ((user != null) && (Captcha1.Text == Captcha.Text))
                 {
                     var login = Convert.ToString(Login.Text);
 
@@ -137,6 +146,11 @@ namespace VK
                     NEXT next = new NEXT(login.ToString());
                     next.ShowDialog();
                     this.Show();
+                }
+                else
+                {
+                    Captcha.Clear();
+                    CaptchaMet();
                 }
             }
 
