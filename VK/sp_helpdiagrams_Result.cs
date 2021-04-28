@@ -10,17 +10,13 @@
 namespace VK
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Person
+    public partial class sp_helpdiagrams_Result
     {
-        public int IdUser { get; set; }
+        public string Database { get; set; }
         public string Name { get; set; }
-        public int Password { get; set; }
-        public int IdGender { get; set; }
-        public int IdRole { get; set; }
-    
-        public virtual Gender Gender { get; set; }
-        public virtual Role Role { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

@@ -13,30 +13,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static VK.ClassEntities;
 
 namespace VK
 {
 
     public partial class MainWindow : Window
     {
-        List<Person> peopleList = new List<Person>();
-        string path = @"C:\Users\user\Desktop\vk.txt";
-
         public MainWindow()
         {
             InitializeComponent();
 
-            using (StreamReader sr = new StreamReader(path))
-            {
-               string srRead  = sr.ReadToEnd();
-                if(srRead != "")
-                {
-                    Login.Text = srRead.Split()[0];
-                    Pass.Text = srRead.Split()[1];
-                }
-              
-
-            }
 
             Captcha1.Visibility = Visibility.Hidden;
             imgCaptcha.Visibility = Visibility.Hidden;
@@ -45,29 +32,6 @@ namespace VK
 
             CaptchaMet();
 
-            peopleList.Add(new Person { Login = "Forelock",Pass = "1234",Id = "1",Name = "Сергей Панченко"});
-            peopleList.Add(new Person { Login = "Den",Pass = "1111",Id = "2",Name = "Денис Большачков"});
-            peopleList.Add(new Person { Login = "Gyss",Pass = "2222",Id = "3",Name = "Никита Козлов"});
-            peopleList.Add(new Person { Login = "Riba",Pass = "3333",Id = "4",Name = "Сергей Панченко"});
-            peopleList.Add(new Person { Login = "Cheburek",Pass = "4444",Id = "5",Name = "Никита Симонов"});
-
-        }
-
-
-        public void swblocknot()
-        {
-          
-
-            using (StreamWriter sw = new StreamWriter(path, false))
-            {
-                if (Save.IsChecked == true)
-                {
-                    sw.Write(Login.Text);
-                    sw.Write(" ");
-                    sw.Write(Pass.Text);
-                    sw.Close();
-                }
-            }
         }
 
 
@@ -110,42 +74,85 @@ namespace VK
         }
 
 
-        private void butExit_Click(object sender, RoutedEventArgs e)
+
+        private void tbExit_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
-        }
 
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            swblocknot();
+            var User = context.Person.ToList().
+                Where(p => p.Name == this.Login.Text && p.Password == Convert.ToInt32(Pass.Password)).FirstOrDefault(); 
 
-            Person user = peopleList.Where(p => p.Login == this.Login.Text && p.Pass == this.Pass.Text).FirstOrDefault(); 
-
-            if ( user!=null )
+            if ( User!=null )
             {
                 var login = Convert.ToString(Login.Text);
 
-                this.Hide();
-                NEXT next = new NEXT(login.ToString());
-                next.ShowDialog();
-                this.Show();
+                switch (User.IdRole)
+                {
+                    case 1:
+                        this.Hide();
+                        Windows.AdminWindow adminWindow = new Windows.AdminWindow(login.ToString());
+                        adminWindow.ShowDialog();
+                        this.Show();
+                        break;
+
+                    case 2:
+                        this.Hide();
+                        Windows.ManegerWindow manegerWindow = new Windows.ManegerWindow(login.ToString());
+                        manegerWindow.ShowDialog();
+                        this.Hide();
+                        break;
+
+                    case 3:
+                        this.Hide();
+                        Windows.UserWindow userWindow = new Windows.UserWindow(login.ToString());
+                        userWindow.ShowDialog();
+                        this.Show();
+                        break;
+
+                    default:
+                        break;
+                }
+
             }
             else
             {
+                MessageBox.Show("Вы ввели не правильно пароль или логин");
+
                 InitializeComponent();
                 Captcha1.Visibility = Visibility.Visible;
                 imgCaptcha.Visibility = Visibility.Visible;
                 reload.Visibility = Visibility.Visible;
                 Captcha.Visibility = Visibility.Visible;
 
-                if ((user != null) && (Captcha1.Text == Captcha.Text))
+                if ((User != null) && (Captcha1.Text == Captcha.Text))
                 {
-                    var login = Convert.ToString(Login.Text);
+                   var login = Convert.ToString(Login.Text);
 
-                    this.Hide();
-                    NEXT next = new NEXT(login.ToString());
-                    next.ShowDialog();
-                    this.Show();
+                switch (User.IdRole)
+                {
+                    case 1:
+                        Windows.AdminWindow adminWindow = new Windows.AdminWindow(login.ToString());
+                        this.Hide();
+                        adminWindow.ShowDialog();
+                        this.Show();
+                        break;
+
+                    case 2:
+                        Windows.ManegerWindow manegerWindow = new Windows.ManegerWindow(login.ToString());
+                        this.Hide();
+                        manegerWindow.ShowDialog();
+                        this.Hide();
+                        break;
+
+                    case 3:
+                        Windows.UserWindow userWindow = new Windows.UserWindow(login.ToString());
+                        this.Hide();
+                        userWindow.ShowDialog();
+                        this.Show();
+                        break;
+
+                    default:
+                        break;
+                }
                 }
                 else
                 {
@@ -153,12 +160,20 @@ namespace VK
                     CaptchaMet();
                 }
             }
+            Login.Clear();
+            Pass.Clear();
 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             CaptchaMet();
+        }
+
+
+        private void butExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
 
     }

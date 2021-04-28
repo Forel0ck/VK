@@ -11,32 +11,28 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static VK.ClassEntities;
 
-namespace VK
+namespace VK.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для NEXT.xaml
+    /// Логика взаимодействия для ChekWindow.xaml
     /// </summary>
-    public partial class NEXT : Window
+    public partial class ChekWindow : Window
     {
-        public NEXT()
+        public ChekWindow()
         {
             InitializeComponent();
+
+            All.ItemsSource = context.Person.ToList();
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
+            this.Hide();
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
             this.Close();
-        }
-
-        private void butExit_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-        public NEXT(string login)
-        {
-            InitializeComponent();
-            txtNext.Text = "Салам Алейкум " + login;
         }
     }
 }

@@ -21,7 +21,7 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Image
-            Source="Img\fon.jpg"
+            Source="Img\F1.jpg"
             Grid.ColumnSpan="2"
             Grid.RowSpan="7"
             Stretch="Fill"
@@ -44,11 +44,10 @@
             Width="25"
             Height="25"
             Margin="15 5 15 10" 
-            Click="butExit_Click"
             FontWeight="Bold"
             Background="{x:Null}"
             Foreground="Red" 
-            BorderBrush="{x:Null}"
+            BorderBrush="{x:Null}" Click="butExit_Click"
             />
         <TextBlock
             Text="Введите логин:"
@@ -79,11 +78,15 @@
             Margin="10"
             Width="200"
             Height="50"
-            Opacity="0.3" 
+
             FontSize="30"
             BorderBrush="{x:Null}"
-            />
-        <TextBox
+            >
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.3"/>
+            </TextBox.Background>
+        </TextBox>
+        <PasswordBox
             x:Name="Pass"
             Grid.Column="1"
             Grid.Row="2"
@@ -92,19 +95,12 @@
             Margin="10"
             Width="200"
             Height="50"
-            Opacity="0.3"
             FontSize="30"
-            />
-        <CheckBox
-            x:Name="Save"
-            Content="Запомнить меня"
-            Grid.ColumnSpan="2"
-            Grid.Row="3"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            FontSize="25"
-            Margin="10" Foreground="White" 
-            />
+            >
+            <PasswordBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.3"/>
+            </PasswordBox.Background>
+        </PasswordBox>
         <TextBox
             x:Name="Captcha1"
             Text=""
@@ -138,12 +134,15 @@
             Width="200"
             Margin="10 10 150 10"
             FontSize="30"
-            Opacity="0.5"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            />
+            >
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.3"/>
+            </TextBox.Background>
+        </TextBox>
         <Button
-            x:Name="Exit"
+            x:Name="tbExit"
             Content="Вход"
             Grid.Row="5"
             Grid.ColumnSpan="2"
@@ -151,11 +150,10 @@
             FontSize="30"
             Margin="100 10"
             Opacity="0.8"
-            Width="150" 
-            Click="Exit_Click" 
+            Width="150"
             BorderBrush="{x:Null}" 
             Background="{x:Null}" 
-            Foreground="White"
+            Foreground="White" Click="tbExit_Click"
             />
         <Button
             x:Name="reload"
