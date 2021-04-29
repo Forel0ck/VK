@@ -146,6 +146,19 @@
             Foreground="White" Click="AddUser_Click"
             />
         <Button
+            x:Name="EditUser"
+            Content="Изменить"
+            Click="EditUser_Click"
+            Grid.Row="5"
+            Grid.ColumnSpan="2"
+            FontSize="30"
+            Margin="7"
+            Width="150"
+            BorderBrush="{x:Null}" 
+            Background="{x:Null}" 
+            Foreground="White" 
+            />
+        <Button
             x:Name="butExit"
             Content="X"
             FontSize="20"
@@ -160,5 +173,6 @@
             Foreground="Red" 
             BorderBrush="{x:Null}" Click="butExit_Click"
             />
+        
     </Grid>
 </Window>

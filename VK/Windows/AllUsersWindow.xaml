@@ -43,7 +43,7 @@
            
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Width="*" Binding="{Binding IdUser}"/>
+                <DataGridTextColumn Header="ID" Width="*" Binding="{Binding IdPerson}"/>
                 <DataGridTextColumn Header="Логин" Width="*" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Пароль" Width="*" Binding="{Binding Password}"/>
                 <DataGridTextColumn Header="Пол" Width="*" Binding="{Binding Gender.GenderName}"/>

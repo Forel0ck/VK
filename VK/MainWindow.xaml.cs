@@ -79,7 +79,7 @@ namespace VK
         {
 
             var User = context.Person.ToList().
-                Where(p => p.Name == this.Login.Text && p.Password == Convert.ToInt32(Pass.Password)).FirstOrDefault(); 
+                Where(p => p.Name == this.Login.Text && p.Password == Pass.Password).FirstOrDefault(); 
 
             if ( User!=null )
             {

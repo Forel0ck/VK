@@ -12,21 +12,15 @@
           <Property Name="IdGender" Type="int" Nullable="false" />
           <Property Name="GenderName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "Person.dbo.Person" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="Person">
           <Key>
-            <PropertyRef Name="IdUser" />
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="Password" />
-            <PropertyRef Name="IdGender" />
-            <PropertyRef Name="IdRole" />
+            <PropertyRef Name="IdPerson" />
           </Key>
-          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="IdPerson" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="int" Nullable="false" />
-          <Property Name="IdGender" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IdRole" Type="int" Nullable="false" />
+          <Property Name="IdGender" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -45,7 +39,7 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <Association Name="FK_Person_Gender">
+        <Association Name="FK_Persons_Gender">
           <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
           <End Role="Person" Type="Self.Person" Multiplicity="*" />
           <ReferentialConstraint>
@@ -57,7 +51,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Person_Role">
+        <Association Name="FK_Persons_Role">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="Person" Type="Self.Person" Multiplicity="*" />
           <ReferentialConstraint>
@@ -102,22 +96,14 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="Хранилище PersonModelContainer">
           <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Person" EntityType="Self.Person" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Person].[IdUser] AS [IdUser], 
-    [Person].[Name] AS [Name], 
-    [Person].[Password] AS [Password], 
-    [Person].[IdGender] AS [IdGender], 
-    [Person].[IdRole] AS [IdRole]
-    FROM [dbo].[Person] AS [Person]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK_Person_Gender" Association="Self.FK_Person_Gender">
+          <AssociationSet Name="FK_Persons_Gender" Association="Self.FK_Persons_Gender">
             <End Role="Gender" EntitySet="Gender" />
             <End Role="Person" EntitySet="Person" />
           </AssociationSet>
-          <AssociationSet Name="FK_Person_Role" Association="Self.FK_Person_Role">
+          <AssociationSet Name="FK_Persons_Role" Association="Self.FK_Persons_Role">
             <End Role="Role" EntitySet="Role" />
             <End Role="Person" EntitySet="Person" />
           </AssociationSet>
@@ -133,7 +119,19 @@
           </Key>
           <Property Name="IdGender" Type="Int32" Nullable="false" />
           <Property Name="GenderName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Person" Relationship="Self.FK_Person_Gender" FromRole="Gender" ToRole="Person" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_Persons_Gender" FromRole="Gender" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="IdPerson" />
+          </Key>
+          <Property Name="IdPerson" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <Property Name="IdGender" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Gender" Relationship="Self.FK_Persons_Gender" FromRole="Person" ToRole="Gender" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_Persons_Role" FromRole="Person" ToRole="Role" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -141,7 +139,7 @@
           </Key>
           <Property Name="IdRole" Type="Int32" Nullable="false" />
           <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Person" Relationship="Self.FK_Person_Role" FromRole="Role" ToRole="Person" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_Persons_Role" FromRole="Role" ToRole="Person" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -153,23 +151,7 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="Person">
-          <Key>
-            <PropertyRef Name="IdUser" />
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="Password" />
-            <PropertyRef Name="IdGender" />
-            <PropertyRef Name="IdRole" />
-          </Key>
-          <Property Name="IdUser" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="Int32" Nullable="false" />
-          <Property Name="IdGender" Type="Int32" Nullable="false" />
-          <Property Name="IdRole" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Gender" Relationship="Self.FK_Person_Gender" FromRole="Person" ToRole="Gender" />
-          <NavigationProperty Name="Role" Relationship="Self.FK_Person_Role" FromRole="Person" ToRole="Role" />
-        </EntityType>
-        <Association Name="FK_Person_Gender">
+        <Association Name="FK_Persons_Gender">
           <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
           <End Role="Person" Type="Self.Person" Multiplicity="*" />
           <ReferentialConstraint>
@@ -181,7 +163,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Person_Role">
+        <Association Name="FK_Persons_Role">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="Person" Type="Self.Person" Multiplicity="*" />
           <ReferentialConstraint>
@@ -195,14 +177,14 @@
         </Association>
         <EntityContainer Name="PersonEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Gender" EntityType="Self.Gender" />
+          <EntitySet Name="Person" EntityType="Self.Person" />
           <EntitySet Name="Role" EntityType="Self.Role" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="Person" EntityType="Self.Person" />
-          <AssociationSet Name="FK_Person_Gender" Association="Self.FK_Person_Gender">
+          <AssociationSet Name="FK_Persons_Gender" Association="Self.FK_Persons_Gender">
             <End Role="Gender" EntitySet="Gender" />
             <End Role="Person" EntitySet="Person" />
           </AssociationSet>
-          <AssociationSet Name="FK_Person_Role" Association="Self.FK_Person_Role">
+          <AssociationSet Name="FK_Persons_Role" Association="Self.FK_Persons_Role">
             <End Role="Role" EntitySet="Role" />
             <End Role="Person" EntitySet="Person" />
           </AssociationSet>
@@ -262,6 +244,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Person">
+            <EntityTypeMapping TypeName="PersonModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="IdPerson" ColumnName="IdPerson" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="IdGender" ColumnName="IdGender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Role">
             <EntityTypeMapping TypeName="PersonModel.Role">
               <MappingFragment StoreEntitySet="Role">
@@ -278,17 +271,6 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Person">
-            <EntityTypeMapping TypeName="PersonModel.Person">
-              <MappingFragment StoreEntitySet="Person">
-                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="IdGender" ColumnName="IdGender" />
-                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -30,6 +30,27 @@ namespace VK.Windows
             tbRole.ItemsSource = context.Role.ToList();
             tbRole.DisplayMemberPath = "RoleName";
             tbRole.SelectedIndex = 0;
+
+            EditUser.Visibility = Visibility.Hidden;
+            EditUser.IsEnabled = false;
+        }
+
+        public AddUsersWindow(Person person)
+        {
+            InitializeComponent();
+            tbGender.ItemsSource = context.Gender.ToList();
+            tbGender.DisplayMemberPath = "GenderName";
+            tbGender.SelectedIndex = person.IdGender - 1;
+
+            AddUser.Visibility = Visibility.Hidden;
+            AddUser.IsEnabled = false;
+
+            tbRole.ItemsSource = context.Role.ToList();
+            tbRole.DisplayMemberPath = "RoleName";
+            tbRole.SelectedIndex = person.IdRole - 1;
+
+            tbLog.Text = person.Name;
+            tbPass.Text = person.Password;
         }
 
 
@@ -51,19 +72,39 @@ namespace VK.Windows
             }
             if (!string.IsNullOrWhiteSpace(tbPass.Text))
             {
-                person.Password = Convert.ToInt32(tbPass.Text);
+                person.Password = tbPass.Text;
             }
             else
             {
                 MessageBox.Show("Вы не  ввели пароль");
             }
+
             person.IdRole = tbRole.SelectedIndex + 1;
             person.IdGender = tbGender.SelectedIndex + 1;
-            person.IdUser =  + 1;
             context.Person.Add(person);
             context.SaveChanges();
             MessageBox.Show("Пользователь добавлен");
-            Close();
+            this.Hide();
+            AllUsersWindow allUsersWindow = new AllUsersWindow();
+            allUsersWindow.ShowDialog();
+            this.Close();
+        }
+
+        private void EditUser_Click(object sender, RoutedEventArgs e)
+        {
+            var user = context.Person.Where(i => i.IdPerson == PersonData.IdPerson).FirstOrDefault();
+            user.Name = tbLog.Text.Trim();
+            user.Password = tbPass.Text.Trim();
+            user.IdRole = tbRole.SelectedIndex + 1;
+            user.IdGender = tbGender.SelectedIndex + 1;
+
+            context.SaveChanges();
+
+            MessageBox.Show("Данные изменены");
+            this.Hide();
+            AllUsersWindow allUsersWindow = new AllUsersWindow();
+            allUsersWindow.ShowDialog();
+            this.Close();
         }
     }
 }

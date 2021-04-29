@@ -14,11 +14,11 @@ namespace VK
     
     public partial class Person
     {
-        public int IdUser { get; set; }
+        public int IdPerson { get; set; }
         public string Name { get; set; }
-        public int Password { get; set; }
-        public int IdGender { get; set; }
+        public string Password { get; set; }
         public int IdRole { get; set; }
+        public int IdGender { get; set; }
     
         public virtual Gender Gender { get; set; }
         public virtual Role Role { get; set; }
