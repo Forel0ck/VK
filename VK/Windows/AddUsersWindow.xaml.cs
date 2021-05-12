@@ -69,6 +69,7 @@ namespace VK.Windows
             else
             {
                 MessageBox.Show("Вы не ввели логин");
+                return;
             }
             if (!string.IsNullOrWhiteSpace(tbPass.Text))
             {
@@ -77,12 +78,15 @@ namespace VK.Windows
             else
             {
                 MessageBox.Show("Вы не  ввели пароль");
+                return;
             }
 
             person.IdRole = tbRole.SelectedIndex + 1;
             person.IdGender = tbGender.SelectedIndex + 1;
             context.Person.Add(person);
             context.SaveChanges();
+
+
             MessageBox.Show("Пользователь добавлен");
             this.Hide();
             AllUsersWindow allUsersWindow = new AllUsersWindow();
@@ -98,13 +102,56 @@ namespace VK.Windows
             user.IdRole = tbRole.SelectedIndex + 1;
             user.IdGender = tbGender.SelectedIndex + 1;
 
-            context.SaveChanges();
 
-            MessageBox.Show("Данные изменены");
-            this.Hide();
-            AllUsersWindow allUsersWindow = new AllUsersWindow();
-            allUsersWindow.ShowDialog();
-            this.Close();
+            var chek = MessageBox.Show($"Вы хотите изменить данные ", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (string.IsNullOrEmpty(tbLog.Text))
+            {
+                MessageBox.Show("Пустое поле логина");
+                return;
+            }
+            if (string.IsNullOrEmpty(tbPass.Text))
+            {
+                MessageBox.Show("Пустое поле пароля");
+                return;
+            }
+
+
+            if (chek == MessageBoxResult.Yes)
+            {
+                context.SaveChanges();
+
+                MessageBox.Show("Данные изменены");
+                this.Hide();
+                AllUsersWindow allUsersWindow = new AllUsersWindow();
+                allUsersWindow.ShowDialog();
+                this.Close();
+            }
+
+
+            else
+            {
+                MessageBox.Show("Вы не ввели значение", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+
+            
+        }
+
+        private void tbLog_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key==Key.Space)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void tbPass_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
         }
     }
 }

@@ -28,10 +28,6 @@ namespace VK.Windows
             All.ItemsSource = context.Person.ToList();
         }
 
-        private void Back_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
 
         private void butExit_Click(object sender, RoutedEventArgs e)
         {
@@ -40,30 +36,57 @@ namespace VK.Windows
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            if (All.SelectedItem is Person person)
-            {
-                this.Hide();
-                AddUsersWindow addUsersWindow = new AddUsersWindow(person);
-                PersonData.IdPerson = person.IdPerson;
-                addUsersWindow.ShowDialog();
-                this.Close();
-            }
-            else
-            {
+            
                 this.Hide();
                 AddUsersWindow addUsersWindow = new AddUsersWindow();
                 addUsersWindow.ShowDialog();
                 this.Close();
-            }
+            
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
             if (All.SelectedItem is Person person)
             {
-                context.Person.Remove(context.Person.Where(i => i.IdPerson == person.IdPerson).FirstOrDefault());
-                context.SaveChanges();
-                All.ItemsSource = context.Person.ToList();
+               var resMass = MessageBox.Show($"Вы хотите удалить пользователя {person.Name}", "Предупреждение", MessageBoxButton.YesNo);
+                if (resMass==MessageBoxResult.Yes)
+                {
+                    context.Person.Remove(context.Person.Where(i => i.IdPerson == person.IdPerson).FirstOrDefault());
+                    context.SaveChanges();
+                    All.ItemsSource = context.Person.ToList();
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show($"Вы не выбрали пользователя", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Change_Click(object sender, RoutedEventArgs e)
+        {
+            if (All.SelectedItem is Person person)
+            {
+                var resMAss = MessageBox.Show($"Вы хотите изменить пользователя {person.Name}", "Предупреждение", MessageBoxButton.YesNo);
+                if (resMAss==MessageBoxResult.Yes)
+                {
+                    this.Hide();
+                    AddUsersWindow addUsersWindow = new AddUsersWindow(person);
+                    PersonData.IdPerson = person.IdPerson;
+                    addUsersWindow.ShowDialog();
+                    this.Close();
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show($"Вы не выбрали пользователя", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

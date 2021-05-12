@@ -51,8 +51,8 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button
-            x:Name="Back"
-            Content="Назад"
+            x:Name="Change"
+            Content="Изменить"
             FontSize="30"
             Grid.Column="0"
             Width="150"
@@ -61,7 +61,7 @@
             HorizontalAlignment="Center"
             BorderBrush="{x:Null}" 
             Background="{x:Null}" 
-            Foreground="White" Click="Back_Click" 
+            Foreground="White" Click="Change_Click"
             />
         <Button
             x:Name="Add"

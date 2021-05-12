@@ -83,10 +83,11 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Margin="20 5"
-            Width="170"
+            Width="171"
+            Height="35" BorderBrush="White" SelectionOpacity="-5" PreviewKeyDown="tbLog_PreviewKeyDown" 
             >
             <TextBox.Background>
-                <SolidColorBrush Color="White" Opacity="0.3"/>
+                <SolidColorBrush Color="White" Opacity="0.5"/>
             </TextBox.Background>
         </TextBox>
         <TextBox
@@ -97,10 +98,26 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Margin="20 5"
-            Width="170"
+            Width="171"
+            Height="35" BorderBrush="White" PreviewKeyDown="tbPass_PreviewKeyDown"
              >
             <TextBox.Background>
-                <SolidColorBrush Color="White" Opacity="0.3"/>
+                <SolidColorBrush Color="White" Opacity="0.5"/>
+            </TextBox.Background>
+        </TextBox>
+        <TextBox
+            FontSize="25"
+            Grid.Column="1"
+            Grid.Row="3"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Margin="20 5"
+            Width="171"
+            Height="35"
+            BorderBrush="White" 
+            >
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0"/>
             </TextBox.Background>
         </TextBox>
         <ComboBox
@@ -111,13 +128,30 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Margin="20 5"
-            Width="170" 
+            Width="170"
+            Height="33"
             Foreground="Black"
             >
             <ComboBox.OpacityMask>
-                <SolidColorBrush Color="Black" Opacity="0.3"/>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
             </ComboBox.OpacityMask>
         </ComboBox>
+
+        <TextBox
+            FontSize="25"
+            Grid.Column="1"
+            Grid.Row="4"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Margin="20 5"
+            Width="171"
+            Height="35"
+            BorderBrush="White" 
+            >
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0"/>
+            </TextBox.Background>
+        </TextBox>
 
         <ComboBox
             x:Name="tbRole"
@@ -128,9 +162,10 @@
             VerticalAlignment="Center"
             Margin="20 5"
             Width="170"
+            Height="33"
             >
             <ComboBox.OpacityMask>
-            <SolidColorBrush Color="Black" Opacity="0.3"/>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
             </ComboBox.OpacityMask>
         </ComboBox>
         <Button
@@ -173,6 +208,6 @@
             Foreground="Red" 
             BorderBrush="{x:Null}" Click="butExit_Click"
             />
-        
+
     </Grid>
 </Window>
