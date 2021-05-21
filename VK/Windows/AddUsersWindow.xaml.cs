@@ -99,7 +99,7 @@ namespace VK.Windows
                 this.Hide();
                 AllUsersWindow allUsersWindow = new AllUsersWindow();
                 allUsersWindow.ShowDialog();
-                this.Show();
+                this.Close();
             }
 
         }
@@ -135,7 +135,7 @@ namespace VK.Windows
                 this.Hide();
                 AllUsersWindow allUsersWindow = new AllUsersWindow();
                 allUsersWindow.ShowDialog();
-                this.Show();
+                this.Close();
             }
 
 
