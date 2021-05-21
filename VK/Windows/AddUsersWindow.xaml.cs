@@ -62,6 +62,8 @@ namespace VK.Windows
         private void AddUser_Click(object sender, RoutedEventArgs e)
         {
             Person person = new Person();
+
+            
             if (!string.IsNullOrWhiteSpace(tbLog.Text))
             {
                 person.Name = tbLog.Text;
@@ -81,17 +83,25 @@ namespace VK.Windows
                 return;
             }
 
-            person.IdRole = tbRole.SelectedIndex + 1;
-            person.IdGender = tbGender.SelectedIndex + 1;
-            context.Person.Add(person);
-            context.SaveChanges();
+            var query = context.Person.Where(p => p.Name == tbLog.Text).FirstOrDefault();
+            if (query != null)
+            {
+                MessageBox.Show("Пользователь с таким логином уже есть");
+            }
+            else
+            {
+                person.IdRole = tbRole.SelectedIndex + 1;
+                person.IdGender = tbGender.SelectedIndex + 1;
+                context.Person.Add(person);
+                context.SaveChanges();
 
+                MessageBox.Show("Пользователь добавлен");
+                this.Hide();
+                AllUsersWindow allUsersWindow = new AllUsersWindow();
+                allUsersWindow.ShowDialog();
+                this.Show();
+            }
 
-            MessageBox.Show("Пользователь добавлен");
-            this.Hide();
-            AllUsersWindow allUsersWindow = new AllUsersWindow();
-            allUsersWindow.ShowDialog();
-            this.Close();
         }
 
         private void EditUser_Click(object sender, RoutedEventArgs e)
@@ -125,7 +135,7 @@ namespace VK.Windows
                 this.Hide();
                 AllUsersWindow allUsersWindow = new AllUsersWindow();
                 allUsersWindow.ShowDialog();
-                this.Close();
+                this.Show();
             }
 
 
@@ -152,6 +162,14 @@ namespace VK.Windows
             {
                 e.Handled = true;
             }
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            AllUsersWindow allUsersWindow = new AllUsersWindow();
+            allUsersWindow.ShowDialog();
+            this.Close();
         }
     }
 }

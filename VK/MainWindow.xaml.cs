@@ -91,21 +91,21 @@ namespace VK
                         this.Hide();
                         Windows.AdminWindow adminWindow = new Windows.AdminWindow(login.ToString());
                         adminWindow.ShowDialog();
-                        this.Show();
+                        this.Close();
                         break;
 
                     case 2:
                         this.Hide();
                         Windows.ManegerWindow manegerWindow = new Windows.ManegerWindow(login.ToString());
                         manegerWindow.ShowDialog();
-                        this.Hide();
+                        this.Close();
                         break;
 
                     case 3:
                         this.Hide();
                         Windows.UserWindow userWindow = new Windows.UserWindow(login.ToString());
                         userWindow.ShowDialog();
-                        this.Show();
+                        this.Close();
                         break;
 
                     default:
@@ -133,21 +133,21 @@ namespace VK
                         Windows.AdminWindow adminWindow = new Windows.AdminWindow(login.ToString());
                         this.Hide();
                         adminWindow.ShowDialog();
-                        this.Show();
+                        this.Close();
                         break;
 
                     case 2:
                         Windows.ManegerWindow manegerWindow = new Windows.ManegerWindow(login.ToString());
                         this.Hide();
                         manegerWindow.ShowDialog();
-                        this.Hide();
+                            this.Close();
                         break;
 
                     case 3:
                         Windows.UserWindow userWindow = new Windows.UserWindow(login.ToString());
                         this.Hide();
                         userWindow.ShowDialog();
-                        this.Show();
+                        this.Close();
                         break;
 
                     default:
