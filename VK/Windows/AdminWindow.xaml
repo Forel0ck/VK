@@ -65,11 +65,24 @@
             FontSize="30"
             Grid.Row="1"
             Grid.Column="1"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Right"
             Margin="15"
             BorderBrush="{x:Null}" 
             Background="{x:Null}" 
             Foreground="White" Click="See_Click" 
+            />
+        <Button
+            x:Name="Off"
+            Content="Не нажимать"
+            FontSize="30"
+            Grid.Row="1"
+            Grid.Column="1"
+            HorizontalAlignment="Left"
+            Margin="15"
+            BorderBrush="{x:Null}" 
+            Background="{x:Null}" 
+            Foreground="White" 
+            Click="Off_Click"    
             />
     </Grid>
 </Window>
