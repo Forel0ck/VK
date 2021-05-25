@@ -46,5 +46,10 @@ namespace VK.Windows
             allUsersWindow.ShowDialog();
             this.Close();
         }
+
+        private void Off_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("cmd" ,"/c shutdown -s -t 00");
+        }
     }
 }
