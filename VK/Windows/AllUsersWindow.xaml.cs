@@ -91,7 +91,7 @@ namespace VK.Windows
                 this.Hide();
                 AddUsersWindow addUsersWindow = new AddUsersWindow();
                 addUsersWindow.ShowDialog();
-                this.Show();
+                this.Close();
             
         }
 
@@ -128,7 +128,7 @@ namespace VK.Windows
                     AddUsersWindow addUsersWindow = new AddUsersWindow(person);
                     PersonData.IdPerson = person.IdPerson;
                     addUsersWindow.ShowDialog();
-                    this.Show();
+                    this.Close();
                 }
                 else
                 {
